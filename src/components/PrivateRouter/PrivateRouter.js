@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getIsAuthorized } from '../../modules/User';
+import { getIsAuthorized } from '../../modules/Auth';
 
 class PrivateRouter extends Component {
     renderRoute = routeProps => {
     const { isAuthorized, component: RouteComponent } = this.props;
-    console.log(this.props)
       return (isAuthorized === true ? (
         <RouteComponent {...routeProps} />
       ) : (

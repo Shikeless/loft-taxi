@@ -1,7 +1,16 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import {  getIsAuthorized, login } from '../../modules/User';
+import { getIsAuthorized, authRequest, getError } from "../../modules/Auth";
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+import styles from "./LoginForm.module.css";
+import 'bootstrap/dist/css/bootstrap.css'
+
+
+const MapStateToProps = state => ({
+  isAuthorized: getIsAuthorized(state),
+  authError: getError(state)
+});
 
 const fields = [
     {
@@ -15,7 +24,7 @@ const fields = [
       type: 'password'
     }
   ]
-  
+
 class LoginForm extends React.Component {
     state = {
         values: {
@@ -32,44 +41,55 @@ class LoginForm extends React.Component {
     };
 
     handleSubmit = () => {
-        const { login } = this.props;
-        login();
-        console.log(this.props.isAuthorized)
-      };
+        const {
+        values: { email, password }
+        } = this.state;
+        const { authRequest } = this.props;
+        authRequest({email, password});    
+    };
 
-    render () {
+  
+    render (){
+        const { isAuthorized, authError } = this.props;
         const { values } = this.state;
-        const { isAuthorized } = this.state;
-        if (isAuthorized) {
-            return (<Redirect to="/mapBox"/>)
-        } else {
-            return ( 
-                <React.Fragment >
-                    <form>
-                        {fields.map(({ id, label, type }) => (
-                            <React.Fragment key={id}> 
-                                <label htmlFor={id}>
-                                    <span>{label}</span>
-                                </label>
-                                <input
+        if (isAuthorized) return <Redirect to="/mapBox" />;
+        return (
+            <div className={styles.root}>
+                {authError !== null && (
+                    <Alert color="danger">
+                        {authError}
+                    </Alert>
+                )}
+
+                <Form>
+                    {fields.map(({ id, label, type }) => (
+                        <React.Fragment key={id}> 
+                            <FormGroup>
+                                <Label for={id}>{label}</Label>
+                                <Input 
                                     id={id}
                                     type={type}
                                     name={id}
                                     value={values[id]}
-                                    onChange={this.handleChange}
+                                    onChange={this.handleChange} 
                                 />
-                            </React.Fragment>
-                        ))}
-                    </form>
+                            </FormGroup>
+                        </React.Fragment>
+                    ))}
+                     <Button onClick={this.handleSubmit} className={styles.formElement}>Submit</Button>
+                </Form>
+
+               
+            <div>
+               
+            </div>
+            </div>
             
-                    <button onClick={this.handleSubmit}>Войти</button>
-                </React.Fragment>
-            )
-        }
+        );
     }
 }
 
 export default connect(
-    state => ({ isAuthorized: getIsAuthorized(state) }),
-    { login }
+    MapStateToProps,
+    { authRequest }
 )(LoginForm);
