@@ -18,9 +18,9 @@ export const fetchAddressList = () => {
   });
 };
 
-export const fetchRoute = ({ address1, address2 }) => {
+export const fetchRoute = ({ from, to }) => {
   return fetch(
-    `https://loft-taxi.glitch.me/route?address1=${address1}&address2=${address2}`
+    `https://loft-taxi.glitch.me/route?address1=${from}&address2=${to}`
   ).then(response => {
     return response.status !== 200 ? Promise.reject(response) : response.json();
   });

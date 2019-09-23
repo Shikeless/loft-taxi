@@ -28,27 +28,32 @@ class FormTaxiRequest extends React.Component {
     }
 
     handleChange = event => {
-        console.log(event.target.value)
-    };
 
-    handleSubmit = (e) => {
-        console.log(123123) 
-    };
+        const { values } = this.state
+        console.log(this.props)
+        // console.log(event.target.name)
+
+        this.setState({
+          values: {...values, [event.target.name]: this.props.addressList[event.target.selectedIndex]}
+        });
+      }
 
     render() {
-        const frields = [ 'from', 'to' ]
-        const { addressList } = this.props
+        const fields = [ 'from', 'to' ]
+        const { addressList, routeRequest } = this.props
+        const { values } = this.state
+        const enabled = 'false'
         return (
             <div>
-                <Form>
-                    {frields.map((id, name) => (
+                <Form onSubmit={this.handleChange}>
+                    {fields.map((id) => (
                         <React.Fragment key={id}>
                             <FormGroup>
-                                <Input type="select" name={name}>
+                                <Input onClick={this.handleChange} type="select" name={id}> 
                                     {addressList &&
                                         addressList.map((item, index) => (
                                           <React.Fragment key={index}>
-                                            <option onClick={console.log({item})} value={item}>
+                                            <option>
                                                 {item}
                                             </option>
                                           </React.Fragment>
@@ -59,7 +64,7 @@ class FormTaxiRequest extends React.Component {
                         </React.Fragment>
                     ))}
                 </Form>
-                <Button onClick={console.log(123)}>Вызвать Такси</Button>  
+                <Button onClick={() => {routeRequest(values)}}>Вызвать Такси</Button>  
             </div>
         );
     }
