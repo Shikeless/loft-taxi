@@ -1,3 +1,9 @@
+"Loft-Taxi"
+
+* Реализован функционал заказа такси.
+* Возможность выбора точек отправления и назначения из загружаемого списка.
+* Возможность сохранения личных данных в localStorage. 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
