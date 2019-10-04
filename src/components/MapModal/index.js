@@ -1,1 +1,1 @@
-export { default } from './MapModal';
+export { default } from "./MapModal";

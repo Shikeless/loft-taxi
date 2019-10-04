@@ -1,4 +1,4 @@
-import { createAction } from 'redux-actions';
+import { createAction } from "redux-actions";
 
 export const authRequest = createAction("AUTH/REQUEST");
 export const authSuccess = createAction("AUTH/SUCCESS");

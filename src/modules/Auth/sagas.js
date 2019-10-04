@@ -1,13 +1,9 @@
-import { 
-    authRequest, 
-    authSuccess, 
-    authFailure 
-} from "./actions";
+import { authRequest, authSuccess, authFailure } from "./actions";
 import { authUser } from "./api.js";
 import { takeLatest, put, call } from "redux-saga/effects";
 
 function* fetchAuthWatcher(action) {
-  yield takeLatest(authRequest, fetchAuthFlow);
+    yield takeLatest(authRequest, fetchAuthFlow);
 }
 
 export function* fetchAuthFlow(action) {
@@ -20,9 +16,8 @@ export function* fetchAuthFlow(action) {
             yield put(authFailure(result.error));
         }
     } catch (er) {
-        console.log(er)
+        console.log(er);
     }
 }
 
 export default fetchAuthWatcher;
-

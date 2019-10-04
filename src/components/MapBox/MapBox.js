@@ -1,37 +1,36 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-// import { apiKey, mapInit } from "./config";
 import { apiKey } from "../../modules/Order/ApiKey.js";
 import { mapInit } from "../../modules/Order/api.js";
-import MapModal from '../MapModal'
+import MapModal from "../MapModal";
 import { connect } from "react-redux";
 import { getAddressList, mapRequest } from "../../modules/Order";
 
 class MapBox extends React.PureComponent {
-  mapContainer = React.createRef();
+    mapContainer = React.createRef();
 
-  async componentDidMount() {
-    this.map = await mapInit(this.mapContainer, apiKey, mapboxgl);
-    this.props.mapRequest(this.map);
-  }
+    async componentDidMount() {
+        this.map = await mapInit(this.mapContainer, apiKey, mapboxgl);
+        this.props.mapRequest(this.map);
+    }
 
-  render() {
-    const style ={
-      position: 'absolute',
-      height: '96%',
-      width: '100%'
-    };
+    render() {
+        const style = {
+            position: "absolute",
+            height: "96%",
+            width: "100%"
+        };
 
-    return (
-      <React.Fragment>
-        <div style={ style } ref={this.mapContainer} />
-        <MapModal />
-      </React.Fragment>
-    );
-  }
+        return (
+            <>
+                <div style={style} ref={this.mapContainer} />
+                <MapModal />
+            </>
+        );
+    }
 }
 
 export default connect(
-  state => ({ addressList: getAddressList(state) }),
-  { mapRequest }
+    state => ({ addressList: getAddressList(state) }),
+    { mapRequest }
 )(MapBox);

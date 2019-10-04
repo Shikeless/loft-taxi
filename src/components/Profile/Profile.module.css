@@ -1,9 +1,10 @@
 .root {
     position: absolute;
-    margin-left: 5px;
-    margin-top: 5px;
-    height: 185px;
-    width: 20%;
+    margin-left: 35%;
+    margin-top: 10px;
+    min-height: 390px;
+    min-width: 500px;
+    width: 30%;
     border: 0px solid lightgrey;
     border-radius: 10px;
     background-color: whitesmoke;
